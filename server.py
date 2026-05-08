@@ -10,6 +10,79 @@ from config import (
 app = Flask(__name__)
 
 
+# =========================================================
+# GET BTS DATA BY SDCA
+# =========================================================
+
+@app.route("/get_bts/<sdca>")
+def get_bts_by_sdca(sdca):
+
+    try:
+
+        url = (
+            f"{SUPABASE_URL}"
+            f"/rest/v1/bts_data"
+            f"?sdca=eq.{sdca}"
+        )
+
+        response = requests.get(
+            url,
+            headers=SUPABASE_HEADERS
+        )
+
+        data = response.json()
+
+        return jsonify(data)
+
+    except Exception as e:
+
+        return jsonify({
+
+            "status": "error",
+
+            "message": str(e)
+
+        })
+
+
+
+
+
+# =========================================================
+# GET COMPLETE MASTER DATA
+# =========================================================
+
+@app.route("/get_master_data")
+def get_master_data():
+
+    try:
+
+        url = (
+            f"{SUPABASE_URL}"
+            f"/rest/v1/master_data"
+        )
+
+        response = requests.get(
+            url,
+            headers=SUPABASE_HEADERS
+        )
+
+        data = response.json()
+
+        return jsonify(data)
+
+    except Exception as e:
+
+        return jsonify({
+
+            "status": "error",
+
+            "message": str(e)
+
+        })
+
+
+
 # ---------------- GET BA ----------------
 
 @app.route("/get_ba")
